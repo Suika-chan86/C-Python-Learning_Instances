@@ -1,47 +1,39 @@
-# 🚀 Git 常用操作与故障排除手册
+# 🐧 Linux (WSL) 基础操作手册
 
-## 1. 日常开发三部曲 (上传代码)
-- `git status`          # 【第一步】查看哪些文件改动了
-- `git add .`           # 【第二步】将改动放入暂存区 (受 .gitignore 保护)
-- `git commit -m "备注"` # 【第三步】本地存档 (例如: "feat: 完成作业1")
-- `git push`            # 【第四步】推送到 GitHub
+## 1. 核心权限与软件管理 (sudo apt)
+> **注意**：`sudo` 执行时需要输入密码，输入过程中屏幕不会显示字符，输完按回车即可。
 
----
-
-## 2. 代理管理 (网络报错必看)
-> 如果遇到 `Connection refused` 或 `Timeout`，请执行以下命令：
-
-### A. 清除代理 (回归直连状态)
-- `git config --global --unset http.proxy`
-- `git config --global --unset https.proxy`
-
-### B. 检查配置 (确认是否删干净)
-- `git config --list`
-- *注意：若看到类似 `http.https://github.com...` 的奇怪项，需手动编辑 `nano ~/.gitconfig` 删除。*
-
-### C. 优化设置 (提高稳定性)
-- `git config --global http.version HTTP/1.1` # 解决 HTTP/2 传输中断
+- `sudo apt update`          # 更新软件源列表（安装新软件前先运行这个）
+- `sudo apt upgrade`         # 升级已安装的所有软件
+- `sudo apt install <名>`    # 安装指定软件 (如: gcc, gdb, make)
+- `sudo apt install -y python-is-python3` # 【必做】修复 python 命令找不到的问题
 
 ---
 
-## 3. 仓库维护 (大扫除)
-### A. 应用 .gitignore 更新
-> 如果不小心上传了二进制文件，用这个流程清理：
-1. `git rm -r --cached .`  # 停止追踪所有文件
-2. `git add .`             # 重新读取 .gitignore 并添加
-3. `git commit -m "chore: 清理忽略文件"`
-4. `git push`
-
-### B. 处理空文件夹
-- Git 默认不追踪空文件夹。若需保留目录结构，请在文件夹内创建 `.gitkeep`：
-  `touch path/to/folder/.gitkeep`
+## 2. 目录切换与查看 (导航指令)
+- `pwd`          # 【我在哪】显示当前所在的完整路径
+- `ls`           # 【有什么】列出当前文件夹下的文件
+- `ls -a`        # 【看隐藏】显示包括 .gitignore 在内的所有隐藏文件
+- `ls -l`        # 【看详情】显示文件的权限、大小和修改时间
+- `cd <路径>`    # 【去哪里】进入指定文件夹 (例如: cd ~/prj)
+- `cd ..`        # 【回原位】返回上一级目录
+- `cd ~`         # 【回家】回到用户主目录
 
 ---
 
-## 4. 常见报错解决方法
-- **报错：`nothing to commit, working tree clean`**
-  - 原因：文件未保存，或已经 add/commit 过了。
-- **报错：`HTTP/2 stream 1 was not closed cleanly`**
-  - 原因：网络波动。建议：换手机热点再 push。
-- **报错：`GnuTLS recv error (-110)`**
-  - 原因：直连 GitHub 超时。建议：开启代理或换热点。
+## 3. 文件处理 (增删改查)
+- `mkdir -p <名>` # 【建目录】新建文件夹 (如: mkdir -p notes/src)
+- `touch <名>`    # 【建文件】新建一个空文件
+- `cp <源> <目>`  # 【复制】拷贝文件
+- `mv <源> <目>`  # 【移动/重命名】移动文件或直接改名
+- `rm <文件名>`   # 【删除】直接删除文件 (无法找回，请谨慎操作！)
+- `rm -rf <目录>` # 【强制删目录】递归删除整个文件夹 (极度危险，确认后再敲)
+
+---
+
+## 4. 终端实用小技巧
+- `cat <文件名>`  # 【快速看】在终端直接打印出文件内容
+- `clear`         # 【洗脸】清空当前终端屏幕，让视线清爽
+- `history`       # 【翻旧账】列出你之前输入过的所有命令
+- `Tab 键`        # 【自动补全】输入文件名头几个字母按 Tab，系统会自动填完
+- `Ctrl + C`      # 【强行停止】当程序卡死或不想跑了，按这个组合键退出
